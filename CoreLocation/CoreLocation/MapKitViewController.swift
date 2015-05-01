@@ -24,6 +24,7 @@ class MapKitViewController: UIViewController , CLLocationManagerDelegate , MKMap
 
 		locationManager.delegate = self
 		locationManager.requestWhenInUseAuthorization()
+		
 
 		var point = MKPointAnnotation();
 		point.coordinate = CLLocationCoordinate2DMake(37.331507, -122.033354)
@@ -84,7 +85,7 @@ class MapKitViewController: UIViewController , CLLocationManagerDelegate , MKMap
 
 
 				// Callout
-				var button = UIButton.buttonWithType(.DetailDisclosure) as UIButton
+				var button = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
 				pin!.leftCalloutAccessoryView = button
 
 				var image = UIImageView(image: UIImage(named: "item_check"))

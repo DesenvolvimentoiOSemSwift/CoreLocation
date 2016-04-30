@@ -26,7 +26,7 @@ class MapKitViewController: UIViewController , CLLocationManagerDelegate , MKMap
 		locationManager.requestWhenInUseAuthorization()
 		
 
-		var point = MKPointAnnotation();
+		let point = MKPointAnnotation();
 		point.coordinate = CLLocationCoordinate2DMake(37.331507, -122.033354)
 		point.title = "Nice Restaurant"
 		point.subtitle = "Very close to you."
@@ -41,7 +41,7 @@ class MapKitViewController: UIViewController , CLLocationManagerDelegate , MKMap
 		// Dispose of any resources that can be recreated.
 	}
 
-	func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+	func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
 		if status == CLAuthorizationStatus.AuthorizedWhenInUse  {
 
 			mapView.showsUserLocation = true
@@ -56,19 +56,19 @@ class MapKitViewController: UIViewController , CLLocationManagerDelegate , MKMap
 		}
 	}
 
-	func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+	func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
 		locationManager.stopUpdatingLocation()
 
-		if let location = locations.last as? CLLocation {
+		if let location = locations.last {
 			mapView.setCenterCoordinate(location.coordinate, animated: true)
 			mapView.camera.altitude = pow(2, 11)
 		}
 	}
 
-	func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+	func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
 
-		var identifier = "CustomAnnotation"
+		let identifier = "CustomAnnotation"
 
 		if annotation.isKindOfClass(MKUserLocation) {
 			return nil
@@ -79,16 +79,16 @@ class MapKitViewController: UIViewController , CLLocationManagerDelegate , MKMap
 
 			if pin == nil {
 				pin = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-				pin.image = UIImage(named: "red_pin")
-				pin.centerOffset = CGPointMake(0, -10)
-				pin.canShowCallout = true
+				pin!.image = UIImage(named: "red_pin")
+				pin!.centerOffset = CGPointMake(0, -10)
+				pin!.canShowCallout = true
 
 
 				// Callout
-				var button = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
+				let button = UIButton(type: .DetailDisclosure)
 				pin!.leftCalloutAccessoryView = button
 
-				var image = UIImageView(image: UIImage(named: "item_check"))
+				let image = UIImageView(image: UIImage(named: "item_check"))
 				pin!.rightCalloutAccessoryView = image
 
 
@@ -103,11 +103,11 @@ class MapKitViewController: UIViewController , CLLocationManagerDelegate , MKMap
 		
 	}
 
-	func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
+	func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
 
 		if control is UIButton {
-			var alert = UIAlertController(title: "Nice Restaurant", message: "Welcome!", preferredStyle: UIAlertControllerStyle.Alert)
-			var action = UIAlertAction(title: "Thanks", style: UIAlertActionStyle.Cancel, handler: nil)
+			let alert = UIAlertController(title: "Nice Restaurant", message: "Welcome!", preferredStyle: UIAlertControllerStyle.Alert)
+			let action = UIAlertAction(title: "Thanks", style: UIAlertActionStyle.Cancel, handler: nil)
 
 			alert.addAction(action)
 			self.presentViewController(alert, animated: true, completion: nil)
